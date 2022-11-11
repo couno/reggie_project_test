@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 /**
@@ -106,6 +107,32 @@ public class EmployeeController {
         employeeService.page(pageInfo,queryWrapper);
 
         return Rmg.success(pageInfo);
+    }
+
+    /**
+     * 用户信息更新
+     */
+    @PutMapping
+    public Rmg<String> update(HttpServletRequest request,@RequestBody Employee employee){
+        // 打印传入信息
+        log.info(employee.toString());
+
+        Long empId = (Long) request.getSession().getAttribute("employee");
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(empId);
+        employeeService.updateById(employee);
+
+        return Rmg.success("员工信息修改成功");
+    }
+
+    @GetMapping("/{id}")
+    public Rmg<Employee> getById(@PathVariable Long id){
+        log.info("根据id查询员工信息.....");
+        Employee employee = employeeService.getById(id);
+        if (employee != null){
+            return Rmg.success(employee);
+        }
+        return Rmg.error("没有查询到对应员工信息");
     }
 
 }
