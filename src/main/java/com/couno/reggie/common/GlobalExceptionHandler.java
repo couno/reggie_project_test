@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
         log.error(ex.getMessage());
         if(ex.getMessage().contains("Duplicate entry")){
             String[] split = ex.getMessage().split(" ");
-            String msg = "账号:" + split[2] + "已存在";
+            String msg = split[2] + "已存在";
             return Rmg.error(msg);
         }
         return Rmg.error("未知错误");
