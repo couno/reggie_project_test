@@ -2,6 +2,7 @@ package com.couno.reggie.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.couno.reggie.common.BaseContext;
 import com.couno.reggie.common.Rmg;
 import com.couno.reggie.entity.Employee;
 import com.couno.reggie.service.EmployeeService;
@@ -66,25 +67,34 @@ public class EmployeeController {
         return Rmg.success(emp);
     }
 
+
+    /**
+     * 退出登录
+     * @param request
+     * @return
+     */
     @PostMapping("/logout")
     public Rmg<String> logout(HttpServletRequest request){
         request.getSession().removeAttribute("employee");
         return Rmg.success("退出成功");
     }
 
+    /**
+     * 新增员工，插入新员工
+     */
     @PostMapping
     public Rmg<String> save(HttpServletRequest request,@RequestBody Employee employee){
         log.info("新增员工,员工信息:{}",employee.toString());
 
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes(StandardCharsets.UTF_8)));
 
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
-        Long empId = (Long)request.getSession().getAttribute("employee");
-
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+        // employee.setCreateTime(LocalDateTime.now());
+        // employee.setUpdateTime(LocalDateTime.now());
+        //
+        // Long empId = (Long)request.getSession().getAttribute("employee");
+        //
+        // employee.setCreateUser(empId);
+        // employee.setUpdateUser(empId);
 
         employeeService.save(employee);
 
@@ -118,8 +128,9 @@ public class EmployeeController {
         log.info(employee.toString());
 
         Long empId = (Long) request.getSession().getAttribute("employee");
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(empId);
+        BaseContext.setCurrentId(empId);
+        // employee.setUpdateTime(LocalDateTime.now());
+        // employee.setUpdateUser(empId);
         employeeService.updateById(employee);
 
         return Rmg.success("员工信息修改成功");
