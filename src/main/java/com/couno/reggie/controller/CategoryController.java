@@ -35,13 +35,19 @@ public class CategoryController {
      * @return
      */
     @DeleteMapping
-    public Rmg<String> delete(@RequestParam("ids") String id){
+    public Rmg<String> delete(@RequestParam("ids") Long id){
         log.info("开始删除id:{}。。。。。",id);
-        categoryService.removeById(id);
+        categoryService.remove(id);
         return Rmg.success("删除成功!");
     }
 
 
+    /**
+     * 更新菜品分类
+     * @param request
+     * @param category
+     * @return
+     */
     @PutMapping
     public Rmg<String> update(HttpServletRequest request,@RequestBody Category category){
         log.info("更新的菜品分类：{}",category);

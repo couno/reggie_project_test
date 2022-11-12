@@ -30,4 +30,10 @@ public class GlobalExceptionHandler {
         return Rmg.error("未知错误");
     }
 
+    @ExceptionHandler(CustomException.class)
+    public Rmg<String> exceptionHandler(CustomException ex){
+        log.error(ex.getMessage());
+        return Rmg.error(ex.getMessage());
+    }
+
 }
