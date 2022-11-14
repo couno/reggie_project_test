@@ -83,19 +83,10 @@ public class EmployeeController {
      * 新增员工，插入新员工
      */
     @PostMapping
-    public Rmg<String> save(HttpServletRequest request,@RequestBody Employee employee){
+    public Rmg<String> save(@RequestBody Employee employee){
         log.info("新增员工,员工信息:{}",employee.toString());
 
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes(StandardCharsets.UTF_8)));
-
-        // employee.setCreateTime(LocalDateTime.now());
-        // employee.setUpdateTime(LocalDateTime.now());
-        //
-        // Long empId = (Long)request.getSession().getAttribute("employee");
-        //
-        // employee.setCreateUser(empId);
-        // employee.setUpdateUser(empId);
-
         employeeService.save(employee);
 
         return Rmg.success("新增员工成功");
@@ -123,14 +114,10 @@ public class EmployeeController {
      * 用户信息更新
      */
     @PutMapping
-    public Rmg<String> update(HttpServletRequest request,@RequestBody Employee employee){
+    public Rmg<String> update(@RequestBody Employee employee){
         // 打印传入信息
         log.info(employee.toString());
 
-        Long empId = (Long) request.getSession().getAttribute("employee");
-        BaseContext.setCurrentId(empId);
-        // employee.setUpdateTime(LocalDateTime.now());
-        // employee.setUpdateUser(empId);
         employeeService.updateById(employee);
 
         return Rmg.success("员工信息修改成功");

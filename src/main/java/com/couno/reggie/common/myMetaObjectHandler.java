@@ -21,9 +21,13 @@ public class myMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("insertFill:公共字段自动插入中.....");
+
+        Long currentId = BaseContext.getCurrentId();
+        log.info("插入里线程的Id：{}",currentId);
+
         metaObject.setValue("createTime", LocalDateTime.now());
-        metaObject.setValue("updateTime", LocalDateTime.now());
         metaObject.setValue("createUser", BaseContext.getCurrentId());
+        metaObject.setValue("updateTime", LocalDateTime.now());
         metaObject.setValue("updateUser", BaseContext.getCurrentId());
     }
 

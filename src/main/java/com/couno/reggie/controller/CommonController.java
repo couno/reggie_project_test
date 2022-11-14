@@ -13,7 +13,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Arrays;
+import java.io.FileNotFoundException;
 import java.util.UUID;
 
 /**
@@ -76,6 +76,8 @@ public class CommonController {
             // 4.关闭资源
             outputStream.close();
             fileInputStream.close();
+        } catch (FileNotFoundException s){
+            log.info("系统找不到指定的文件");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
@@ -34,6 +35,12 @@ public class GlobalExceptionHandler {
     public Rmg<String> exceptionHandler(CustomException ex){
         log.error(ex.getMessage());
         return Rmg.error(ex.getMessage());
+    }
+
+    @ExceptionHandler(FileNotFoundException.class)
+    public Rmg<String> exceptionHandler(FileNotFoundException ex){
+        log.error(ex.getMessage());
+        return Rmg.error("图片加载失败");
     }
 
 }

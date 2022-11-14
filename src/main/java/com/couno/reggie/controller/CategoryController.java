@@ -73,8 +73,8 @@ public class CategoryController {
         log.info("新增菜品的信息：{}",category);
         Long empId = (Long) request.getSession().getAttribute("employee");
         log.info("新增菜品人:{}",empId);
-        // 自动注入公共字段
-        BaseContext.setCurrentId(empId);
+        // // 自动注入公共字段
+        // BaseContext.setCurrentId(empId);
         categoryService.save(category);
         return Rmg.success("添加成功");
     }
