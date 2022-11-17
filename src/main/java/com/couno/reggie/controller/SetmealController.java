@@ -28,10 +28,11 @@ public class SetmealController {
     @Autowired
     SetmealDishService setmealDishService;
 
+
+    // 添加菜品实体
     @PostMapping
     public Rmg<String> save(@RequestBody SetmealDto setmealDto){
-
-
+        System.out.println(setmealDto);
 
         return null;
     }
