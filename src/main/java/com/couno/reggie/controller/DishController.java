@@ -126,4 +126,15 @@ public class DishController {
         }
         return Rmg.success("成功");
     }
+
+    @GetMapping("/list")
+    public Rmg<List<Dish>> getDish(@RequestParam("categoryId")Long id){
+
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Dish::getCategoryId,id);
+
+        List<Dish> list = dishService.list(queryWrapper);
+
+        return Rmg.success(list);
+    }
 }
