@@ -80,7 +80,13 @@ public class ShoppingCartController {
         String setmealId = subInfo.get("setmealId");
 
         LambdaQueryWrapper<ShoppingCart> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ShoppingCart::getDishId,dishId);
+
+        if (dishId != null){
+            queryWrapper.eq(ShoppingCart::getDishId,dishId);
+        }
+        if (setmealId != null){
+            queryWrapper.eq(ShoppingCart::getSetmealId,setmealId);
+        }
         ShoppingCart cart = shoppingCartService.getOne(queryWrapper);
 
         log.info("cart:{}",cart);
